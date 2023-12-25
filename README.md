@@ -131,7 +131,7 @@ A sample output from the above operations:
     
     
     ----------Operation: createInvite---------
-    New InviteEvent Created: org.example.Entity.InviteEvent@3532ec19
+    New InviteEvent Created: Event {id='2', name='Invite: Project Discussion', creator=john@gmail.com}
     ----------End of an operation---------
     
     

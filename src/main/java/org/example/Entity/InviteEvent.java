@@ -37,4 +37,13 @@ public class InviteEvent extends Event{
         schedules.add(this.getSchedule());
         return Availability.getAvailableSlots(date, schedules);
     }
+
+    @Override
+    public String toString() {
+        return "Event {" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", creator=" + creator.email +
+                '}';
+    }
 }
