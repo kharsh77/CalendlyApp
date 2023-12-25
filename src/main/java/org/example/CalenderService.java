@@ -93,40 +93,49 @@ public class CalenderService implements CalenderInterface {
     @Override
     public OneEvent createEvent(String name, User creator, Date startDate, Date endDate,
                                 Interval dailySlot, Integer duration, Integer gap, Integer totalSlots, Integer dailyLimit) {
+
+        System.out.println("-----Operation: createEvent----");
         OneEvent oneEvent= new OneEvent(name, creator, startDate, endDate, dailySlot, duration, gap, totalSlots, dailyLimit);
         this.updateEvent(oneEvent);
         this.updateUserEventMapping(creator.getId(), oneEvent.getId());
         System.out.println("New Event Created: "+ oneEvent.toString() );
+        System.out.println("-----End of an operation----\n\n");
         return oneEvent;
     }
 
     @Override
     public Availability getAvailableSlots(String eventId, Date date) throws ParseException {
+        System.out.println("-----Operation: getAvailableSlots----");
         Event event = this.getEvent(eventId);
         Availability c = new Availability(event.getAvailableSlots(date));
         this.printAvailability(c);
+        System.out.println("-----End of an operation----\n\n");
         return null;
     }
 
     @Override
     public void bookSlot(String eventId, Date slotTime, String bookingEmail) throws ParseException {
+        System.out.println("-----Operation: bookSlot----");
         Event event = this.getEvent(eventId);
         if(event!=null){
             MutablePair<Event,Schedule> pair = event.bookSlot(slotTime, bookingEmail);
             if(pair != null) {
                 this.updateUserScheduleMapping(event.getCreator().getId(), pair.getRight());
                 this.updateEvent(pair.getLeft());
-                System.out.println(" -Waiting for confirmation for slot at: " + slotTime);
+                System.out.println(" Slot booked. Waiting for confirmation for slot at: " + slotTime);
+                System.out.println("-----End of an operation----\n\n");
                 return;
             }
         }
 
         System.out.println("No such event with eventId: "+ eventId);
+        System.out.println("-----End of an operation----\n\n");
         return;
     }
 
     @Override
     public Availability checkMyAvailability(String userId, Date date) throws ParseException {
+        System.out.println("-----Operation: checkMyAvailability----");
         ArrayList<String> eventIds = this.getUserEventMapping(userId);
         ArrayList<Schedule> schedules = this.getAllSchedules(eventIds, date);
         Collections.sort(schedules);
@@ -134,11 +143,13 @@ public class CalenderService implements CalenderInterface {
         ArrayList<Interval> x = Availability.getAvailableSlots(date, schedules);
         Availability c = new Availability(x);
         this.printAvailability(c);
+        System.out.println("-----End of an operation----\n\n");
         return c;
     }
 
     @Override
     public ArrayList<OneEvent> viewMyScheduledEvents(String userId, Date date) {
+        System.out.println("-----Operation: viewMyScheduledEvents----");
         ArrayList<String> eventIds = this.getUserEventMapping(userId);
         ArrayList<Schedule> schedules = new ArrayList<>();
         for(String id: eventIds){
@@ -148,35 +159,41 @@ public class CalenderService implements CalenderInterface {
         };
 
         this.printSchedule(schedules);
+        System.out.println("-----End of an operation----\n\n");
         return null;
     }
 
 
     @Override
     public void confirmSlot(String eventId, String scheduleId, ScheduleStatus action) {
+        System.out.println("-----Operation: confirmSlot----");
         Event event = this.getEvent(eventId);
         Schedule s = this.updateSchedule(event, scheduleId, action);
         if(s==null){
-            System.out.println("  Slot not updated");
+            System.out.println(" Slot not updated");
         } else{
-            System.out.println("  Slot updated");
+            System.out.println(" Slot updated");
         }
+        System.out.println("-----End of an operation----\n\n");
     }
 
 
     @Override
     public Availability checkOverlap(String userId1, String userId2, Date date) throws ParseException {
+        System.out.println("---------Operation: checkOverlap--------");
         ArrayList<Interval> i1 =this.checkMyAvailability(userId1, date).getIntervals();
         ArrayList<Interval> i2 =this.checkMyAvailability(userId2, date).getIntervals();
 
         Availability.getAllAvailableIntervals(i1, i2, date);
         Availability a = new Availability(i1);
         this.printAvailability(a);
+        System.out.println("---------End of an operation--------\n\n");
         return a;
     }
 
     @Override
     public OneEvent createInvite(String name, User creator, User invitee, Date startTime, Integer duration) {
+        System.out.println("----------Operation: createInvite---------");
         Interval i = new Interval(startTime, Helper.addDureation(startTime, duration));
         Event event = new InviteEvent(name, creator, invitee, i);
 
@@ -185,6 +202,8 @@ public class CalenderService implements CalenderInterface {
         this.updateUserEventMapping(invitee.getId(), event.getId());
         this.updateUserScheduleMapping(creator.getId(), event.getSchedule());
         this.updateUserScheduleMapping(invitee.getId(), event.getSchedule());
+        System.out.println("New InviteEvent Created: "+ event.toString() );
+        System.out.println("----------End of an operation---------\n\n");
         return null;
     }
 
@@ -201,7 +220,7 @@ public class CalenderService implements CalenderInterface {
     public void printSchedule(ArrayList<Schedule> schedules){
         StringBuilder sb = new StringBuilder();
         for(Schedule s: schedules){
-            sb.append(String.format("    Schedule:: EventId:%s ScheduleId:%s status:%s from:%s to: %s\n",
+            sb.append(String.format(" Schedule:: EventId:%s ScheduleId:%s status:%s from:%s to: %s\n",
                     s.getEventId(), s.getId(),s.getStatus(), s.getInterval().getStartTime(), s.getInterval().getEndTime()));
         }
         System.out.println(sb.toString());
