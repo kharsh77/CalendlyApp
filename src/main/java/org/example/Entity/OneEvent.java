@@ -3,7 +3,6 @@ package org.example.Entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.example.Utils.Helper;
 
 import java.text.ParseException;
@@ -12,11 +11,7 @@ import java.util.*;
 @Setter
 @Getter
 public class OneEvent extends Event{
-//    ArrayList<Schedule> schedules = new ArrayList<>();
     HashMap<String, Integer> dailyLimitMap = new HashMap<>();
-
-
-
 
     public String createDailyStringMapKey(Date date){
         return Helper.getDateToString(date).split(" ")[0];
@@ -115,9 +110,6 @@ public class OneEvent extends Event{
 
         ArrayList<Interval> booked = getBookedIntervals();
         Iterator<Interval> bookedIterator = booked.iterator();
-
-//        Collections.sort(booked);
-
 
         Interval currentInterval = bookedIterator.hasNext()? bookedIterator.next() : null;
 

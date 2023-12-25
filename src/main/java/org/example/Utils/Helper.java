@@ -15,8 +15,7 @@ public class Helper {
 
     public static int findDifferenceInMin(Date start_date, Date end_date)
     {
-        // Calculate time difference
-        // in milliseconds
+        // Calculate time difference in milliseconds
         long difference_In_Time
                 = end_date.getTime() - start_date.getTime();
 
@@ -26,20 +25,6 @@ public class Helper {
         return Integer.parseInt(String.valueOf(difference_In_Minutes));
 
     }
-
-    public enum dateEnum {
-        DAY, TIME
-    }
-
-    public void print(Object[] o){
-        StringBuilder sb = new StringBuilder();
-        for(Object x: o){
-            sb.append(x.toString());
-            sb.append(" ");
-        }
-        System.out.println(sb.toString());
-    }
-
 
     public static Date stringToDate(String dateInString) throws ParseException {
         return DateUtils.parseDate(dateInString,
@@ -84,17 +69,3 @@ public class Helper {
         return Helper.stringToDate(dateString + " " + timeString);
     }
 }
-
-
-//    public static Date dateParser(String string, dateEnum dateEnum) throws ParseException {
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss a", Locale.ENGLISH);
-////        formatter.setTimeZone(TimeZone.getTimeZone("America/New_York"));
-//
-//        String dateInString = "22-01-2015 00:00:00 AM";
-//        Date date = formatter.parse(dateInString);
-//        String formattedDateString = formatter.format(date);
-//
-//        System.out.println(date);
-//        System.out.println(formattedDateString);
-//        return null;
-//    }

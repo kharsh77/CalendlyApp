@@ -59,7 +59,6 @@ public class Schedule implements Comparable<Schedule>{
                 );
     };
 
-
     @Override
     public int compareTo(Schedule o) {
         Interval val = ((Schedule) o).getInterval();

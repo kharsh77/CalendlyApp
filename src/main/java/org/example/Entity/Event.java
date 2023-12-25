@@ -68,15 +68,13 @@ abstract public class Event {
         return dailyLimit;
     }
 
-    abstract public MutablePair<Event,Schedule> bookSlot(Date slotStartTime, String requesterEmail) throws ParseException;
-    abstract public ArrayList<Interval> getAvailableSlots(Date date) throws ParseException;
-
     public ArrayList<Schedule> getSchedules() {
         return schedules;
     }
 
+    abstract public MutablePair<Event,Schedule> bookSlot(Date slotStartTime, String requesterEmail) throws ParseException;
+    abstract public ArrayList<Interval> getAvailableSlots(Date date) throws ParseException;
     abstract public Schedule getSchedule();
-
 
     public ArrayList<Schedule> getSchedules(Date date) {
         ArrayList<Schedule> schedules = new ArrayList<>();
@@ -92,6 +90,5 @@ abstract public class Event {
     void setSchedules(ArrayList<Schedule> scheduled) {
         this.schedules = scheduled;
     }
-
 
 }

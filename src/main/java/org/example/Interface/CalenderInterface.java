@@ -8,9 +8,6 @@ import java.util.Date;
 
 
 public interface CalenderInterface {
-    // Event >> Schedule
-    // Schedule >> bookSlot
-
     Availability checkMyAvailability(String userId, Date date) throws ParseException;
     OneEvent createEvent(String name, User creator, Date startDate, Date endDate,
                       Interval dailySlot, Integer duration, Integer gap, Integer totalSlots, Integer dailyLimit);
@@ -22,10 +19,7 @@ public interface CalenderInterface {
     Availability checkOverlap(String userId1, String userId2, Date date) throws ParseException;
     OneEvent createInvite(String name, User creator, User invitee, Date startTime, Integer duration);
     Event getEvent(String eventId);
-    void acceptInvite(OneEvent event, User user, InviteStatus action);
-
 
     // All invites
     ArrayList<OneEvent> viewMyScheduledEvents(String userId, Date date);
-
 }

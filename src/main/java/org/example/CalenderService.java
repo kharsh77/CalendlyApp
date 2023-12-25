@@ -169,9 +169,6 @@ public class CalenderService implements CalenderInterface {
         ArrayList<Interval> i1 =this.checkMyAvailability(userId1, date).getIntervals();
         ArrayList<Interval> i2 =this.checkMyAvailability(userId2, date).getIntervals();
 
-//        for(Interval i: i2){
-//            i1 = Availability.getAllAvailableIntervals(i1, i);
-//        }
         Availability.getAllAvailableIntervals(i1, i2, date);
         Availability a = new Availability(i1);
         this.printAvailability(a);
@@ -195,15 +192,6 @@ public class CalenderService implements CalenderInterface {
     public Event getEvent(String eventId) {
         return this.events.getOrDefault(eventId, null);
     }
-
-    @Override
-    public void acceptInvite(OneEvent event, User user, InviteStatus action) {
-
-    }
-
-
-
-
 
     // Utils
     static Date parseDate(String str) throws ParseException {

@@ -5,9 +5,7 @@ import org.example.Utils.Helper;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 
 public class InviteEvent extends Event{
     public InviteEvent(String name, User creator, User invitee, Interval interval) {

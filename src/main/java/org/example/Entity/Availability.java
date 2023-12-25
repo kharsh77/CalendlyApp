@@ -93,7 +93,7 @@ public class Availability {
         return out;
     }
 
-    static int[] func(int[] slotsAvailability, ArrayList<Interval> bookedInterVals1, Interval interval){
+    static int[] utilFunc(int[] slotsAvailability, ArrayList<Interval> bookedInterVals1, Interval interval){
         Iterator<Interval> bookedIterator = bookedInterVals1.iterator();
 
         Interval currentInterval = bookedIterator.hasNext()? bookedIterator.next() : null;
@@ -131,8 +131,8 @@ public class Availability {
         int[] slotsAvailability = new int[totalSots];
 
 
-        func(slotsAvailability, bookedInterVals1, interval);
-        func(slotsAvailability, bookedInterVals2, interval);
+        utilFunc(slotsAvailability, bookedInterVals1, interval);
+        utilFunc(slotsAvailability, bookedInterVals2, interval);
 
         boolean[] x = new boolean[totalSots];
 
