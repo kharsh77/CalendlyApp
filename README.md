@@ -15,6 +15,13 @@ Operation:
 8. viewMyScheduledEvents: A user can view a specific booked meeting for a day.
 9. checkOverlap: Available timeSlots between two users can be checked.
 
+Assumptions:
+1. IST timezone is assumed for all operations
+2. Update and delete operations are not supported
+3. Operations are assumed to be operated in thread safe condition
+4. Meeting can be scheduled with granularity of minutes
+5. Meetings have definite endtime and recurring events are not supported
+
 A sample set of operations which can be performed:
 
         // 1. Register User;
@@ -64,7 +71,9 @@ A sample set of operations which can be performed:
 Next Steps:
 1. Recurring type of meeting can be extended by the app further.
 2. Notification operations can be extended for notifying users when a meeting get created or confirmed.
-3. Handling more edge cases
+3. Making few operations thread safe by using locks
+4. Handling more edge cases
+
 
 A sample output from the above operations:
 
