@@ -70,9 +70,9 @@ public class OneEvent extends Event{
     private ArrayList<Interval> getBookedIntervals(){
         ArrayList<Interval> booked = new ArrayList<>();
         for(Schedule s: this.schedules){
-            booked.add(s.interval);
+            if(s.getStatus().equals(ScheduleStatus.CONFIRMED))
+                booked.add(s.interval);
         }
-        Collections.sort(booked);
         return booked;
     }
 

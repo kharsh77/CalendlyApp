@@ -105,7 +105,7 @@ public class CalenderService implements CalenderInterface {
 
     @Override
     public Availability getAvailableSlots(String eventId, Date date) throws ParseException {
-        System.out.println("-----Operation: getAvailableSlots----");
+        System.out.println(String.format("-----Operation: getAvailableSlots for eventId: %s----", eventId));
         Event event = this.getEvent(eventId);
         Availability c = new Availability(event.getAvailableSlots(date));
         this.printAvailability(c);
@@ -115,7 +115,7 @@ public class CalenderService implements CalenderInterface {
 
     @Override
     public void bookSlot(String eventId, Date slotTime, String bookingEmail) throws ParseException {
-        System.out.println("-----Operation: bookSlot----");
+        System.out.println(String.format("-----Operation: bookSlot for eventId: %s----", eventId));
         Event event = this.getEvent(eventId);
         if(event!=null){
             MutablePair<Event,Schedule> pair = event.bookSlot(slotTime, bookingEmail);
@@ -134,22 +134,26 @@ public class CalenderService implements CalenderInterface {
     }
 
     @Override
-    public Availability checkMyAvailability(String userId, Date date) throws ParseException {
-        System.out.println("-----Operation: checkMyAvailability----");
+    public Availability checkMyAvailability(String userId, Date date, boolean skipPrint) throws ParseException {
+        if(!skipPrint) {
+            System.out.println(String.format("-----Operation: checkMyAvailability for userId: %s----", userId));
+        }
         ArrayList<String> eventIds = this.getUserEventMapping(userId);
         ArrayList<Schedule> schedules = this.getAllSchedules(eventIds, date);
         Collections.sort(schedules);
 
         ArrayList<Interval> x = Availability.getAvailableSlots(date, schedules);
         Availability c = new Availability(x);
-        this.printAvailability(c);
-        System.out.println("-----End of an operation----\n\n");
+        if(!skipPrint) {
+            this.printAvailability(c);
+            System.out.println("-----End of an operation----\n\n");
+        }
         return c;
     }
 
     @Override
     public ArrayList<OneEvent> viewMyScheduledEvents(String userId, Date date) {
-        System.out.println("-----Operation: viewMyScheduledEvents----");
+        System.out.println(String.format("-----Operation: viewMyScheduledEvents for userId: %s----", userId));
         ArrayList<String> eventIds = this.getUserEventMapping(userId);
         ArrayList<Schedule> schedules = new ArrayList<>();
         for(String id: eventIds){
@@ -166,7 +170,7 @@ public class CalenderService implements CalenderInterface {
 
     @Override
     public void confirmSlot(String eventId, String scheduleId, ScheduleStatus action) {
-        System.out.println("-----Operation: confirmSlot----");
+        System.out.println(String.format("-----Operation: confirmSlot  eventId: %s scheduleId: %s action: %s----", eventId, scheduleId, action));
         Event event = this.getEvent(eventId);
         Schedule s = this.updateSchedule(event, scheduleId, action);
         if(s==null){
@@ -180,9 +184,9 @@ public class CalenderService implements CalenderInterface {
 
     @Override
     public Availability checkOverlap(String userId1, String userId2, Date date) throws ParseException {
-        System.out.println("---------Operation: checkOverlap--------");
-        ArrayList<Interval> i1 =this.checkMyAvailability(userId1, date).getIntervals();
-        ArrayList<Interval> i2 =this.checkMyAvailability(userId2, date).getIntervals();
+        System.out.println(String.format("---------Operation: checkOverlap for available slots of userId: %s for userId: %s--------", userId1, userId2));
+        ArrayList<Interval> i1 =this.checkMyAvailability(userId1, date, true).getIntervals();
+        ArrayList<Interval> i2 =this.checkMyAvailability(userId2, date, true).getIntervals();
 
         Availability.getAllAvailableIntervals(i1, i2, date);
         Availability a = new Availability(i1);

@@ -33,7 +33,7 @@ public class Interval implements Comparable<Interval>{
     @Override
     public int compareTo(Interval o) {
         Date val = ((Interval) o).getStartTime();
-        return val.before(this.getStartTime()) ? 1 : -1;
+        return val.before(this.getStartTime()) ? -1 : 1;
     }
 
     @Override

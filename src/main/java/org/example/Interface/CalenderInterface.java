@@ -8,7 +8,7 @@ import java.util.Date;
 
 
 public interface CalenderInterface {
-    Availability checkMyAvailability(String userId, Date date) throws ParseException;
+    Availability checkMyAvailability(String userId, Date date, boolean skipPrint) throws ParseException;
     OneEvent createEvent(String name, User creator, Date startDate, Date endDate,
                       Interval dailySlot, Integer duration, Integer gap, Integer totalSlots, Integer dailyLimit);
     Availability getAvailableSlots(String eventId, Date date) throws ParseException;
