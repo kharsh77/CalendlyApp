@@ -23,7 +23,7 @@ public class App
         Interval NineFiveInterval = new Interval(parseDate("2023-12-23 09:00"), parseDate("2023-12-23 17:00"));
 
         // 2. Create a event
-        OneEvent interviewEvent = calenderService.createEvent("Interview:: System Engineer", user1,
+        calenderService.createEvent("Interview:: System Engineer", user1,
                 parseDate("2023-12-23 00:00"), parseDate("2023-12-26 00:00"), NineFiveInterval,
                 35, 10, 10, 3);
 

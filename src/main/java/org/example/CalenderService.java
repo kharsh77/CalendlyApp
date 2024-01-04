@@ -91,7 +91,7 @@ public class CalenderService implements CalenderInterface {
 
 
     @Override
-    public OneEvent createEvent(String name, User creator, Date startDate, Date endDate,
+    public void createEvent(String name, User creator, Date startDate, Date endDate,
                                 Interval dailySlot, Integer duration, Integer gap, Integer totalSlots, Integer dailyLimit) {
 
         System.out.println("-----Operation: createEvent----");
@@ -100,17 +100,15 @@ public class CalenderService implements CalenderInterface {
         this.updateUserEventMapping(creator.getId(), oneEvent.getId());
         System.out.println("New Event Created: "+ oneEvent.toString() );
         System.out.println("-----End of an operation----\n\n");
-        return oneEvent;
     }
 
     @Override
-    public Availability getAvailableSlots(String eventId, Date date) throws ParseException {
+    public void getAvailableSlots(String eventId, Date date) throws ParseException {
         System.out.println(String.format("-----Operation: getAvailableSlots for eventId: %s----", eventId));
         Event event = this.getEvent(eventId);
         Availability c = new Availability(event.getAvailableSlots(date));
         this.printAvailability(c);
         System.out.println("-----End of an operation----\n\n");
-        return null;
     }
 
     @Override
@@ -130,7 +128,6 @@ public class CalenderService implements CalenderInterface {
 
         System.out.println("No such event with eventId: "+ eventId);
         System.out.println("-----End of an operation----\n\n");
-        return;
     }
 
     @Override
@@ -152,7 +149,7 @@ public class CalenderService implements CalenderInterface {
     }
 
     @Override
-    public ArrayList<OneEvent> viewMyScheduledEvents(String userId, Date date) {
+    public void viewMyScheduledEvents(String userId, Date date) {
         System.out.println(String.format("-----Operation: viewMyScheduledEvents for userId: %s----", userId));
         ArrayList<String> eventIds = this.getUserEventMapping(userId);
         ArrayList<Schedule> schedules = new ArrayList<>();
@@ -164,7 +161,6 @@ public class CalenderService implements CalenderInterface {
 
         this.printSchedule(schedules);
         System.out.println("-----End of an operation----\n\n");
-        return null;
     }
 
 
@@ -196,7 +192,7 @@ public class CalenderService implements CalenderInterface {
     }
 
     @Override
-    public OneEvent createInvite(String name, User creator, User invitee, Date startTime, Integer duration) {
+    public void createInvite(String name, User creator, User invitee, Date startTime, Integer duration) {
         System.out.println("----------Operation: createInvite---------");
         Interval i = new Interval(startTime, Helper.addDureation(startTime, duration));
         Event event = new InviteEvent(name, creator, invitee, i);
@@ -208,7 +204,6 @@ public class CalenderService implements CalenderInterface {
         this.updateUserScheduleMapping(invitee.getId(), event.getSchedule());
         System.out.println("New InviteEvent Created: "+ event.toString() );
         System.out.println("----------End of an operation---------\n\n");
-        return null;
     }
 
     @Override
