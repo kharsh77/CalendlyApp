@@ -1,15 +1,11 @@
 package org.example.Entity;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.example.Utils.Helper;
 
 import java.text.ParseException;
 import java.util.*;
 
-@Setter
-@Getter
 public class OneEvent extends Event{
     HashMap<String, Integer> dailyLimitMap = new HashMap<>();
 

@@ -8,18 +8,18 @@ import java.util.Date;
 
 
 public interface CalenderInterface {
-    Availability checkMyAvailability(String userId, Date date, boolean skipPrint) throws ParseException;
-    void createEvent(String name, User creator, Date startDate, Date endDate,
-                      Interval dailySlot, Integer duration, Integer gap, Integer totalSlots, Integer dailyLimit);
-    void getAvailableSlots(String eventId, Date date) throws ParseException;
-    void bookSlot(String eventId, Date slotTime, String bookingEmail) throws ParseException;
-    void confirmSlot(String eventId, String scheduleId, ScheduleStatus action);
+    Availability checkMyAvailability(String userId, Date date, boolean skipPrint) throws Exception;
+    Event createEvent(String name, String creator, Date startDate, Date endDate,
+                      Interval dailySlot, Integer duration, Integer gap, Integer totalSlots, Integer dailyLimit) throws Exception;
+    Availability getAvailableSlots(String eventId, Date date) throws Exception;
+    String bookSlot(String eventId, Date slotTime, String bookingEmail) throws Exception;
+    String confirmSlot(String eventId, String scheduleId, ScheduleStatus action) throws Exception;
 
     // Invite >> Schedule >> accept
-    Availability checkOverlap(String userId1, String userId2, Date date) throws ParseException;
-    void createInvite(String name, User creator, User invitee, Date startTime, Integer duration);
+    Availability checkOverlap(String userId1, String userId2, Date date) throws Exception;
+    Event createInvite(String name, String creator, String invitee, Date startTime, Integer duration) throws Exception;
     Event getEvent(String eventId);
 
     // All invites
-    void viewMyScheduledEvents(String userId, Date date);
+    ArrayList<Schedule> viewMyScheduledEvents(String userId, Date date) throws Exception;
 }

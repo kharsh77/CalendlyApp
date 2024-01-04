@@ -2,9 +2,11 @@ package org.example;
 
 import org.example.Entity.User;
 import org.example.Interface.UserOperation;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
+@Service
 public class UserService implements UserOperation {
     HashMap<String, User> users = new HashMap<>();
 
