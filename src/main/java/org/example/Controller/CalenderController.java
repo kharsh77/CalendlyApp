@@ -1,15 +1,10 @@
 package org.example.Controller;
 
 import org.example.CalenderService;
-import org.example.Entity.Event;
 import org.example.Entity.Interval;
-import org.example.Entity.ScheduleStatus;
-import org.example.Entity.User;
 import org.example.Models.*;
-import org.example.UserService;
 import org.example.Utils.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +18,7 @@ public class CalenderController {
     CalenderService calenderService;
 
 
-    @PostMapping("/create/event")
+    @PostMapping("/event")
     Object createEvent(@RequestBody CreateEventRequest req) throws Exception {
 
         Interval interval = new Interval(
@@ -43,82 +38,82 @@ public class CalenderController {
                     req.getDailyLimit()
             );
         } catch (Exception ex) {
-            return ex.toString();
+            return new ErrorResponse(ex.getMessage());
         }
     }
 
 
-    @PostMapping("/get-available-slots")
+    @PostMapping("/event/slots")
     Object getAvailableSlots(@RequestBody GetAvailableSlotsRequest req) throws ParseException {
         try {
             return calenderService.getAvailableSlots(req.getEventId(),
                     Helper.stringToDate(String.format("%s 00:00", req.getDate())));
         } catch (Exception ex) {
-            return ex.toString();
+            return new ErrorResponse(ex.getMessage());
         }
     }
 
 
-    @PostMapping("/event/book-slot")
+    @PostMapping("/event/slot/book")
     Object bookSlot(@RequestBody BookSlotRequest req) throws ParseException {
         try {
             return calenderService.bookSlot(
                     req.getEventId(),
-                    Helper.stringToDate(req.getSlot()),
+                    Helper.stringToDate(String.format("%s %s", req.getDate(), req.getStartTime())),
                     req.getEmail()
             );
         } catch (Exception ex) {
-            return ex.toString();
+            return new ErrorResponse(ex.getMessage());
         }
     }
 
 
-    @PostMapping("/get-my-availability")
+    @PostMapping("/user/availability")
     Object checkMyAvailability(@RequestBody GetMyAvailabilityRequest req) throws ParseException {
         try {
             return calenderService.checkMyAvailability(req.getUserId(),
                     Helper.stringToDate(String.format("%s 00:00", req.getDate())), false);
         } catch (Exception ex) {
-            return ex.toString();
+            return new ErrorResponse(ex.getMessage());
         }
     }
 
-    @PostMapping("/get-my-scheduled-events")
+    @PostMapping("/user/slots/scheduled")
     Object viewMyScheduledEvents(@RequestBody GetMyAvailabilityRequest req) throws ParseException {
         try {
             return calenderService.viewMyScheduledEvents(req.getUserId(),
                     Helper.stringToDate(String.format("%s 00:00", req.getDate())));
         } catch (Exception ex) {
-            return ex.toString();
+            return new ErrorResponse(ex.getMessage());
         }
     }
 
-    @PostMapping("/confirm-slot")
+    @PostMapping("/slot/confirm")
     Object confirmSlot(@RequestBody ConfirmSlotRequest req) throws ParseException {
         try {
             return calenderService.confirmSlot(req.getEventId(),
                     req.getScheduleId(),
                     req.getScheduleStatus());
         } catch (Exception ex) {
-            return ex.toString();
+            return new ErrorResponse(ex.getMessage());
         }
     }
 
-    @PostMapping("/invite/create")
+    @PostMapping("/invite")
     Object createInvite(@RequestBody CreateInviteRequest req) throws ParseException {
         try {
             return calenderService.createInvite(req.getName(),
                     req.getCreatorUserId(),
                     req.getInviteeUserId(),
-                    Helper.stringToDate(req.getDate()),
+                    Helper.stringToDate(String.format("%s %s", req.getDate(), req.getStartTime())),
                     req.getDuration()
             );
         } catch (Exception ex) {
-            return ex.toString();
+            return new ErrorResponse(ex.getMessage());
         }
     }
 
-    @PostMapping("/check-overlap")
+    @PostMapping("/user/overlap")
     Object checkOverlap(@RequestBody CheckOverlapRequest req) throws ParseException {
         try {
             return calenderService.checkOverlap(
@@ -127,7 +122,7 @@ public class CalenderController {
                     Helper.stringToDate(req.getDate())
             );
         } catch (Exception ex) {
-            return ex.toString();
+            return new ErrorResponse(ex.getMessage());
         }
     }
 }

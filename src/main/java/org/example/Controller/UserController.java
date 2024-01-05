@@ -19,7 +19,7 @@ public class UserController {
         return "Success123";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/user")
     User register(@RequestBody RegisterUserRequest req){
         User user = userService.register(req.getName(), req.getEmail());
         return user;

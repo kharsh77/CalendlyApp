@@ -9,6 +9,7 @@ public class CreateInviteRequest {
     String creatorUserId;
     String inviteeUserId;
     String date;
+    String startTime;
     Integer duration;
 }
 
